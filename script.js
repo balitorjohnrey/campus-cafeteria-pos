@@ -3,42 +3,42 @@ const products = [
     id: "rice",
     name: "Rice (Plain)",
     price: 1500,
-    visual: "🍚",
+    image: "assets/products/rice-plain.png",
     description: "Steamed plain rice served warm."
   },
   {
     id: "fried-chicken",
     name: "Fried Chicken (1 pc)",
     price: 6500,
-    visual: "🍗",
+    image: "assets/products/fried-chicken.png",
     description: "Crispy chicken piece with savory seasoning."
   },
   {
     id: "pork-adobo",
     name: "Pork Adobo",
     price: 6000,
-    visual: "🍲",
+    image: "assets/products/pork-adobo.png",
     description: "Classic pork adobo in soy-vinegar sauce."
   },
   {
     id: "vegetable-side",
     name: "Vegetable Side Dish",
     price: 3500,
-    visual: "🥗",
+    image: "assets/products/vegetable-side-dish.png",
     description: "Fresh vegetable side for a balanced meal."
   },
   {
     id: "iced-tea",
     name: "Iced Tea (cup)",
     price: 2000,
-    visual: "🥤",
+    image: "assets/products/iced-tea.png",
     description: "Cold sweet iced tea in a cup."
   },
   {
     id: "bottled-water",
     name: "Bottled Water",
     price: 2000,
-    visual: "💧",
+    image: "assets/products/bottled-water.png",
     description: "Refreshing bottled drinking water."
   }
 ];
@@ -190,7 +190,9 @@ function renderProducts() {
 
     return `
     <article class="product-card">
-      <div class="product-visual" aria-hidden="true">${product.visual}</div>
+      <div class="product-visual">
+        <img src="${product.image}" alt="${product.name}">
+      </div>
       <div class="product-copy">
         <h3>${product.name}</h3>
         <p>${product.description}</p>
