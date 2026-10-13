@@ -260,13 +260,13 @@ input:disabled {
 .cart-header,
 .cart-row {
   display: grid;
-  grid-template-columns: minmax(130px, 1fr) 98px 88px 42px;
-  gap: 10px;
+  grid-template-columns: minmax(112px, 1fr) 84px 76px 30px;
+  gap: 6px;
   align-items: center;
 }
 
 .cart-header {
-  padding: 10px 12px;
+  padding: 10px;
   background: var(--green-900);
   color: #ffffff;
   font-size: 0.77rem;
@@ -279,7 +279,7 @@ input:disabled {
 }
 
 .cart-row {
-  padding: 12px;
+  padding: 12px 10px;
   border-top: 1px solid var(--line);
   background: #ffffff;
 }
@@ -301,14 +301,14 @@ input:disabled {
 
 .qty-controls {
   display: grid;
-  grid-template-columns: 30px 1fr 30px;
+  grid-template-columns: 28px 1fr 28px;
   align-items: center;
   gap: 4px;
 }
 
 .qty-btn,
 .remove-btn {
-  min-height: 30px;
+  min-height: 28px;
   color: var(--green-900);
   background: #eef6f2;
 }
@@ -325,6 +325,7 @@ input:disabled {
 
 .cart-subtotal {
   font-weight: 800;
+  font-size: 0.95rem;
   text-align: right;
 }
 
