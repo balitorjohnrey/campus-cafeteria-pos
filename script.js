@@ -591,7 +591,8 @@ function confirmPayment() {
   renderPaymentSummary(transaction);
   renderReceipt(transaction);
   receiptSection.hidden = false;
-  receiptSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  document.body.classList.add("modal-open");
+  printReceiptBtn.focus();
 }
 
 function startNewTransaction() {
@@ -601,6 +602,7 @@ function startNewTransaction() {
   cashInput.disabled = false;
   confirmPaymentBtn.disabled = false;
   receiptSection.hidden = true;
+  document.body.classList.remove("modal-open");
   paymentSummary.innerHTML = "";
   receipt.innerHTML = "";
   clearMessage();

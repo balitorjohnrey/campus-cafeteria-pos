@@ -642,11 +642,28 @@ select:disabled {
   background: var(--success-bg);
 }
 
-.receipt-section {
-  margin-top: 26px;
+body.modal-open {
+  overflow: hidden;
+}
+
+.receipt-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
   padding: 24px;
-  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.48);
+}
+
+.receipt-dialog {
+  width: min(760px, 100%);
+  max-height: min(92vh, 860px);
+  overflow: auto;
+  padding: 24px;
+  border-radius: 14px;
   background: #fafafa;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.28);
 }
 
 .payment-summary {
@@ -846,6 +863,15 @@ select:disabled {
   .receipt-actions {
     flex-direction: column;
   }
+
+  .receipt-modal {
+    padding: 12px;
+  }
+
+  .receipt-dialog {
+    max-height: 94vh;
+    padding: 16px;
+  }
 }
 
 @media print {
@@ -869,10 +895,14 @@ select:disabled {
   }
 
   .app-shell,
-  .receipt-section {
+  .receipt-modal,
+  .receipt-dialog {
     display: block !important;
     padding: 0;
     background: #ffffff;
+    box-shadow: none;
+    max-height: none;
+    overflow: visible;
   }
 
   .receipt {

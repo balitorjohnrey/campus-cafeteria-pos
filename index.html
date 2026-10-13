@@ -171,12 +171,14 @@
         </aside>
       </div>
 
-      <section id="receiptSection" class="receipt-section" aria-live="polite" hidden>
-        <div id="paymentSummary" class="payment-summary"></div>
-        <article id="receipt" class="receipt" aria-label="Digital receipt"></article>
-        <div class="receipt-actions">
-          <button id="printReceiptBtn" class="secondary-action" type="button">Print Receipt</button>
-          <button id="newTransactionBtn" class="primary-action" type="button">New Transaction</button>
+      <section id="receiptSection" class="receipt-modal" role="dialog" aria-modal="true" aria-label="Payment receipt" hidden>
+        <div class="receipt-dialog">
+          <div id="paymentSummary" class="payment-summary"></div>
+          <article id="receipt" class="receipt" aria-label="Digital receipt"></article>
+          <div class="receipt-actions">
+            <button id="printReceiptBtn" class="secondary-action" type="button">Print Receipt</button>
+            <button id="newTransactionBtn" class="primary-action" type="button">New Transaction</button>
+          </div>
         </div>
       </section>
     </div>
