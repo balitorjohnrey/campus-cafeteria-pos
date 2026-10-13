@@ -1,10 +1,46 @@
 const products = [
-  { id: "rice", name: "Rice (Plain)", price: 1500, mark: "RC" },
-  { id: "fried-chicken", name: "Fried Chicken (1 pc)", price: 6500, mark: "CH" },
-  { id: "pork-adobo", name: "Pork Adobo", price: 6000, mark: "PA" },
-  { id: "vegetable-side", name: "Vegetable Side Dish", price: 3500, mark: "VG" },
-  { id: "iced-tea", name: "Iced Tea (cup)", price: 2000, mark: "IT" },
-  { id: "bottled-water", name: "Bottled Water", price: 2000, mark: "BW" }
+  {
+    id: "rice",
+    name: "Rice (Plain)",
+    price: 1500,
+    visual: "🍚",
+    description: "Steamed plain rice served warm."
+  },
+  {
+    id: "fried-chicken",
+    name: "Fried Chicken (1 pc)",
+    price: 6500,
+    visual: "🍗",
+    description: "Crispy chicken piece with savory seasoning."
+  },
+  {
+    id: "pork-adobo",
+    name: "Pork Adobo",
+    price: 6000,
+    visual: "🍲",
+    description: "Classic pork adobo in soy-vinegar sauce."
+  },
+  {
+    id: "vegetable-side",
+    name: "Vegetable Side Dish",
+    price: 3500,
+    visual: "🥗",
+    description: "Fresh vegetable side for a balanced meal."
+  },
+  {
+    id: "iced-tea",
+    name: "Iced Tea (cup)",
+    price: 2000,
+    visual: "🥤",
+    description: "Cold sweet iced tea in a cup."
+  },
+  {
+    id: "bottled-water",
+    name: "Bottled Water",
+    price: 2000,
+    visual: "💧",
+    description: "Refreshing bottled drinking water."
+  }
 ];
 
 const productGrid = document.getElementById("productGrid");
@@ -20,6 +56,7 @@ const paymentSummary = document.getElementById("paymentSummary");
 const receipt = document.getElementById("receipt");
 const printReceiptBtn = document.getElementById("printReceiptBtn");
 const newTransactionBtn = document.getElementById("newTransactionBtn");
+const menuSearch = document.getElementById("menuSearch");
 
 let cart = [];
 let transactionPaid = false;
@@ -137,18 +174,42 @@ function validatePayment() {
 }
 
 function renderProducts() {
-  productGrid.innerHTML = products.map((product) => `
+  const searchTerm = menuSearch.value.trim().toLowerCase();
+  const visibleProducts = products.filter((product) => (
+    product.name.toLowerCase().includes(searchTerm)
+    || product.description.toLowerCase().includes(searchTerm)
+  ));
+
+  if (visibleProducts.length === 0) {
+    productGrid.innerHTML = '<p class="empty-products">No matching products found.</p>';
+    return;
+  }
+
+  productGrid.innerHTML = visibleProducts.map((product) => {
+    const cartItem = cart.find((item) => item.id === product.id);
+
+    return `
     <article class="product-card">
-      <div class="product-topline">
-        <div>
-          <h3>${product.name}</h3>
-          <p class="product-price">${formatPeso(product.price)}</p>
-        </div>
-        <span class="product-mark" aria-hidden="true">${product.mark}</span>
+      <div class="product-visual" aria-hidden="true">${product.visual}</div>
+      <div class="product-copy">
+        <h3>${product.name}</h3>
+        <p>${product.description}</p>
       </div>
-      <button class="add-cart-btn" type="button" data-product-id="${product.id}" ${transactionPaid ? "disabled" : ""}>Add to Cart</button>
+      <div class="product-actions">
+        <strong class="product-price">${formatPeso(product.price)}</strong>
+        ${cartItem ? `
+          <div class="inline-qty" aria-label="Quantity controls for ${product.name}">
+            <button class="qty-btn" type="button" data-card-action="decrease" data-product-id="${product.id}" aria-label="Decrease ${product.name} quantity" ${transactionPaid ? "disabled" : ""}>−</button>
+            <span class="qty-value">${cartItem.quantity}</span>
+            <button class="qty-btn" type="button" data-card-action="increase" data-product-id="${product.id}" aria-label="Increase ${product.name} quantity" ${transactionPaid ? "disabled" : ""}>+</button>
+          </div>
+        ` : `
+          <button class="add-cart-btn" type="button" data-card-action="add" data-product-id="${product.id}" ${transactionPaid ? "disabled" : ""}>Add</button>
+        `}
+      </div>
     </article>
-  `).join("");
+  `;
+  }).join("");
 }
 
 function setMessage(message, type = "error") {
@@ -179,7 +240,7 @@ function renderCart() {
   } else {
     cartItems.innerHTML = cart.map((item) => `
       <div class="cart-row" data-product-id="${item.id}">
-        <div>
+        <div class="cart-copy">
           <p class="cart-name">${item.name}</p>
           <p class="cart-price">${formatPeso(item.price)} each</p>
         </div>
@@ -224,6 +285,7 @@ function addToCart(productId) {
   }
 
   clearMessage();
+  renderProducts();
   renderCart();
 }
 
@@ -251,6 +313,7 @@ function updateQuantity(productId, direction) {
   }
 
   clearMessage();
+  renderProducts();
   renderCart();
 }
 
@@ -261,6 +324,7 @@ function removeFromCart(productId) {
 
   cart = cart.filter((item) => item.id !== productId);
   clearMessage();
+  renderProducts();
   renderCart();
 }
 
@@ -285,7 +349,7 @@ function renderReceipt(transaction) {
   `).join("");
 
   receipt.innerHTML = `
-    <h2>Campus Cafeteria POS System</h2>
+    <h2>CafeTrack</h2>
     <div class="receipt-meta">
       <p><strong>Transaction No.:</strong> ${transaction.reference}</p>
       <p><strong>Date &amp; Time:</strong> ${formatReceiptDate(transaction.date)}</p>
@@ -349,13 +413,20 @@ function startNewTransaction() {
 }
 
 productGrid.addEventListener("click", (event) => {
-  const addButton = event.target.closest("[data-product-id]");
+  const productButton = event.target.closest("[data-card-action]");
 
-  if (!addButton) {
+  if (!productButton) {
     return;
   }
 
-  addToCart(addButton.dataset.productId);
+  const { cardAction, productId } = productButton.dataset;
+
+  if (cardAction === "add") {
+    addToCart(productId);
+    return;
+  }
+
+  updateQuantity(productId, cardAction);
 });
 
 cartItems.addEventListener("click", (event) => {
@@ -381,6 +452,8 @@ cashInput.addEventListener("input", () => {
   clearMessage();
   updateChangeDisplay();
 });
+
+menuSearch.addEventListener("input", renderProducts);
 
 cashInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {

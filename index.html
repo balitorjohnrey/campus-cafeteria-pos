@@ -7,89 +7,121 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="app-header">
-    <div>
-      <h1>CafeTrack</h1>
-      <p class="subtitle">Cashier Dashboard</p>
+  <main class="device-frame">
+    <div class="app-shell">
+      <header class="app-header">
+        <div class="brand-lockup">
+          <span class="brand-icon" aria-hidden="true">☕</span>
+          <h1>CafeTrack</h1>
+        </div>
+        <p class="flow-title">Choose Your Order</p>
+        <p class="flow-next">Next: Pay &amp; Receipt</p>
+      </header>
+
+      <div class="progress-row" aria-hidden="true">
+        <span class="progress-step active"></span>
+        <span class="progress-step"></span>
+        <span class="progress-step"></span>
+      </div>
+
+      <div class="pos-layout">
+        <nav class="menu-sidebar" aria-label="Menu categories">
+          <h2>Menu</h2>
+          <button class="category-btn active" type="button">
+            <span aria-hidden="true">🍽️</span>
+            Food &amp; Drinks
+          </button>
+          <button class="category-btn" type="button">
+            <span aria-hidden="true">🍚</span>
+            Rice Meals
+          </button>
+          <button class="category-btn" type="button">
+            <span aria-hidden="true">🍗</span>
+            Main Dishes
+          </button>
+          <button class="category-btn" type="button">
+            <span aria-hidden="true">🥗</span>
+            Side Dish
+          </button>
+          <button class="category-btn" type="button">
+            <span aria-hidden="true">🥤</span>
+            Beverages
+          </button>
+          <button class="category-btn" type="button">
+            <span aria-hidden="true">🧾</span>
+            Receipt
+          </button>
+        </nav>
+
+        <section class="products-panel" aria-labelledby="productsHeading">
+          <label class="search-box" for="menuSearch">
+            <span aria-hidden="true">⌕</span>
+            <input id="menuSearch" type="search" placeholder="Search menu here">
+          </label>
+
+          <div class="section-heading">
+            <div>
+              <h2 id="productsHeading">Food &amp; Drinks</h2>
+              <p class="helper-text">Tap an item to add it to the order.</p>
+            </div>
+          </div>
+
+          <div id="productGrid" class="product-grid" aria-live="polite"></div>
+        </section>
+
+        <aside class="order-panel" aria-labelledby="orderHeading">
+          <div class="section-heading compact">
+            <div>
+              <h2 id="orderHeading">Your Order</h2>
+              <p id="itemCount" class="item-count">0 items</p>
+            </div>
+          </div>
+
+          <div id="validationMessage" class="message" role="alert" aria-live="assertive"></div>
+
+          <div id="cartItems" class="cart-items" role="region" aria-label="Order summary">
+            <p class="empty-cart">No products have been added yet.</p>
+          </div>
+
+          <section class="totals-box" aria-label="Payment summary">
+            <h3>Payment Summary</h3>
+            <div class="total-row">
+              <span>Total</span>
+              <strong id="grandTotal">₱0.00</strong>
+            </div>
+            <div class="payment-field">
+              <label for="cashInput">Cash Received</label>
+              <input
+                id="cashInput"
+                type="number"
+                inputmode="decimal"
+                min="0"
+                step="0.01"
+                placeholder="0.00"
+                aria-describedby="cashHelp"
+              >
+              <small id="cashHelp">Enter the customer's cash payment.</small>
+            </div>
+            <div class="total-row muted">
+              <span>Change</span>
+              <strong id="changeAmount">₱0.00</strong>
+            </div>
+          </section>
+
+          <button id="confirmPaymentBtn" class="primary-action" type="button">Confirm Payment</button>
+        </aside>
+      </div>
+
+      <section id="receiptSection" class="receipt-section" aria-live="polite" hidden>
+        <div id="paymentSummary" class="payment-summary"></div>
+        <article id="receipt" class="receipt" aria-label="Digital receipt"></article>
+        <div class="receipt-actions">
+          <button id="printReceiptBtn" class="secondary-action" type="button">Print Receipt</button>
+          <button id="newTransactionBtn" class="primary-action" type="button">New Transaction</button>
+        </div>
+      </section>
     </div>
-    <div class="status-chip" aria-label="System status">
-      <span class="status-dot"></span>
-      Ready for orders
-    </div>
-  </header>
-
-  <main class="pos-layout">
-    <section class="products-panel" aria-labelledby="productsHeading">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Menu</p>
-          <h2 id="productsHeading">Food &amp; Drinks</h2>
-        </div>
-        <p class="helper-text">Select items for the current transaction.</p>
-      </div>
-
-      <div id="productGrid" class="product-grid" aria-live="polite"></div>
-    </section>
-
-    <aside class="order-panel" aria-labelledby="orderHeading">
-      <div class="section-heading compact">
-        <div>
-          <p class="eyebrow">Cart</p>
-          <h2 id="orderHeading">Current Order</h2>
-        </div>
-        <span id="itemCount" class="count-pill">0 items</span>
-      </div>
-
-      <div id="validationMessage" class="message" role="alert" aria-live="assertive"></div>
-
-      <div class="cart-table" role="region" aria-label="Order summary">
-        <div class="cart-header" aria-hidden="true">
-          <span>Product</span>
-          <span>Qty</span>
-          <span>Subtotal</span>
-          <span></span>
-        </div>
-        <div id="cartItems" class="cart-items">
-          <p class="empty-cart">No products have been added yet.</p>
-        </div>
-      </div>
-
-      <div class="totals-box">
-        <div class="total-row">
-          <span>Grand Total</span>
-          <strong id="grandTotal">₱0.00</strong>
-        </div>
-        <div class="payment-field">
-          <label for="cashInput">Cash Received</label>
-          <input
-            id="cashInput"
-            type="number"
-            inputmode="decimal"
-            min="0"
-            step="0.01"
-            placeholder="0.00"
-            aria-describedby="cashHelp"
-          >
-          <small id="cashHelp">Enter the customer's cash payment.</small>
-        </div>
-        <div class="total-row muted">
-          <span>Change</span>
-          <strong id="changeAmount">₱0.00</strong>
-        </div>
-      </div>
-
-      <button id="confirmPaymentBtn" class="primary-action" type="button">Confirm Payment</button>
-    </aside>
   </main>
-
-  <section id="receiptSection" class="receipt-section" aria-live="polite" hidden>
-    <div id="paymentSummary" class="payment-summary"></div>
-    <article id="receipt" class="receipt" aria-label="Digital receipt"></article>
-    <div class="receipt-actions">
-      <button id="printReceiptBtn" class="secondary-action" type="button">Print Receipt</button>
-      <button id="newTransactionBtn" class="primary-action" type="button">New Transaction</button>
-    </div>
-  </section>
 
   <script src="script.js"></script>
 </body>
