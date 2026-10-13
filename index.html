@@ -26,46 +26,106 @@
       <div class="pos-layout">
         <nav class="menu-sidebar" aria-label="Menu categories">
           <h2>Menu</h2>
-          <button class="category-btn active" type="button">
+          <button class="category-btn active" type="button" data-view="menu" data-category="all">
             <span aria-hidden="true">🍽️</span>
             Food &amp; Drinks
           </button>
-          <button class="category-btn" type="button">
+          <button class="category-btn" type="button" data-view="menu" data-category="rice">
             <span aria-hidden="true">🍚</span>
             Rice Meals
           </button>
-          <button class="category-btn" type="button">
+          <button class="category-btn" type="button" data-view="menu" data-category="main">
             <span aria-hidden="true">🍗</span>
             Main Dishes
           </button>
-          <button class="category-btn" type="button">
+          <button class="category-btn" type="button" data-view="menu" data-category="side">
             <span aria-hidden="true">🥗</span>
             Side Dish
           </button>
-          <button class="category-btn" type="button">
+          <button class="category-btn" type="button" data-view="menu" data-category="beverage">
             <span aria-hidden="true">🥤</span>
             Beverages
           </button>
-          <button class="category-btn" type="button">
+          <button class="category-btn" type="button" data-view="history">
             <span aria-hidden="true">🧾</span>
-            Receipt
+            History
+          </button>
+          <button class="category-btn" type="button" data-view="manage">
+            <span aria-hidden="true">＋</span>
+            Add Product
           </button>
         </nav>
 
-        <section class="products-panel" aria-labelledby="productsHeading">
-          <label class="search-box" for="menuSearch">
-            <span aria-hidden="true">⌕</span>
-            <input id="menuSearch" type="search" placeholder="Search menu here">
-          </label>
+        <section class="products-panel" aria-live="polite">
+          <div id="menuView">
+            <label class="search-box" for="menuSearch">
+              <span aria-hidden="true">⌕</span>
+              <input id="menuSearch" type="search" placeholder="Search menu here">
+            </label>
 
-          <div class="section-heading">
-            <div>
-              <h2 id="productsHeading">Food &amp; Drinks</h2>
-              <p class="helper-text">Tap an item to add it to the order.</p>
+            <div class="section-heading">
+              <div>
+                <h2 id="productsHeading">Food &amp; Drinks</h2>
+                <p class="helper-text">Tap an item to add it to the order.</p>
+              </div>
             </div>
+
+            <div id="productGrid" class="product-grid"></div>
           </div>
 
-          <div id="productGrid" class="product-grid" aria-live="polite"></div>
+          <div id="historyView" class="utility-view" hidden>
+            <div class="section-heading">
+              <div>
+                <h2>Purchase History</h2>
+                <p class="helper-text">Completed transactions are saved in this browser.</p>
+              </div>
+            </div>
+            <div id="historyList" class="history-list"></div>
+          </div>
+
+          <div id="manageView" class="utility-view" hidden>
+            <div class="section-heading">
+              <div>
+                <h2>Manage Products</h2>
+                <p class="helper-text">Add new items and update available quantities.</p>
+              </div>
+            </div>
+
+            <form id="addProductForm" class="add-product-form">
+              <label>
+                Product Name
+                <input id="newProductName" type="text" placeholder="Example: Banana Cue" required>
+              </label>
+              <label>
+                Category
+                <select id="newProductCategory" required>
+                  <option value="rice">Rice Meals</option>
+                  <option value="main">Main Dishes</option>
+                  <option value="side">Side Dish</option>
+                  <option value="beverage">Beverages</option>
+                </select>
+              </label>
+              <label>
+                Price
+                <input id="newProductPrice" type="number" min="0.01" step="0.01" placeholder="25.00" required>
+              </label>
+              <label>
+                Quantity
+                <input id="newProductStock" type="number" min="0" step="1" placeholder="20" required>
+              </label>
+              <label class="form-wide">
+                Description
+                <input id="newProductDescription" type="text" placeholder="Short product description" required>
+              </label>
+              <label class="form-wide">
+                Product Image
+                <input id="newProductImage" type="file" accept="image/*">
+              </label>
+              <button class="primary-action form-wide" type="submit">Add Product</button>
+            </form>
+
+            <div id="inventoryList" class="inventory-list"></div>
+          </div>
         </section>
 
         <aside class="order-panel" aria-labelledby="orderHeading">

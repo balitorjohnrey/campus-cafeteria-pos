@@ -30,7 +30,8 @@ body {
 }
 
 button,
-input {
+input,
+select {
   font: inherit;
 }
 
@@ -40,7 +41,8 @@ button {
 }
 
 button:disabled,
-input:disabled {
+input:disabled,
+select:disabled {
   cursor: not-allowed;
   opacity: 0.48;
 }
@@ -253,7 +255,7 @@ input:disabled {
 }
 
 .product-copy {
-  min-height: 104px;
+  min-height: 126px;
   padding: 12px 12px 0;
 }
 
@@ -274,6 +276,22 @@ input:disabled {
   color: #222222;
   font-size: 0.82rem;
   line-height: 1.35;
+}
+
+.stock-chip {
+  display: inline-flex;
+  margin-top: 10px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  color: #147448;
+  background: var(--success-bg);
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.stock-chip.sold-out {
+  color: var(--danger);
+  background: var(--danger-bg);
 }
 
 .product-actions {
@@ -423,6 +441,104 @@ input:disabled {
 .empty-products {
   grid-column: 1 / -1;
   padding: 44px 20px;
+}
+
+.utility-view {
+  min-height: 690px;
+}
+
+.history-list,
+.inventory-list {
+  display: grid;
+  gap: 12px;
+}
+
+.history-card,
+.inventory-row {
+  display: grid;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.05);
+}
+
+.history-card {
+  grid-template-columns: 1fr auto;
+}
+
+.history-card h3,
+.history-card p,
+.inventory-row h3,
+.inventory-row p {
+  margin: 0;
+}
+
+.history-card h3,
+.inventory-row h3 {
+  font-size: 0.98rem;
+}
+
+.history-card p,
+.inventory-row p {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.inventory-row {
+  grid-template-columns: 58px minmax(160px, 1fr) 110px 110px auto;
+}
+
+.inventory-row img {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: var(--warm);
+}
+
+.inventory-row label,
+.add-product-form label {
+  display: grid;
+  gap: 6px;
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.inventory-row input,
+.add-product-form input,
+.add-product-form select {
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 11px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.inventory-row input:focus,
+.add-product-form input:focus,
+.add-product-form select:focus {
+  outline: 3px solid rgba(245, 9, 20, 0.18);
+  border-color: var(--accent);
+}
+
+.add-product-form {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+  padding: 16px;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.05);
+}
+
+.form-wide {
+  grid-column: span 2;
 }
 
 .totals-box {
@@ -624,6 +740,16 @@ input:disabled {
   .product-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .add-product-form,
+  .inventory-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .inventory-row img {
+    width: 72px;
+    height: 72px;
+  }
 }
 
 @media (max-width: 950px) {
@@ -678,6 +804,10 @@ input:disabled {
   .order-panel {
     position: static;
   }
+
+  .form-wide {
+    grid-column: span 1;
+  }
 }
 
 @media (max-width: 640px) {
@@ -700,6 +830,12 @@ input:disabled {
   }
 
   .cart-row {
+    grid-template-columns: 1fr;
+  }
+
+  .add-product-form,
+  .inventory-row,
+  .history-card {
     grid-template-columns: 1fr;
   }
 

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">CafeTrack product placeholder</title>
+  <desc id="desc">A simple CafeTrack food tray placeholder for newly added products.</desc>
+  <rect width="512" height="512" rx="96" fill="#fff3e6"/>
+  <circle cx="256" cy="238" r="118" fill="#ffffff" stroke="#f50914" stroke-width="18"/>
+  <path d="M173 254c24 32 56 48 96 48 34 0 62-11 84-33" fill="none" stroke="#ff8500" stroke-width="22" stroke-linecap="round"/>
+  <circle cx="220" cy="216" r="18" fill="#147448"/>
+  <circle cx="290" cy="207" r="18" fill="#f50914"/>
+  <circle cx="263" cy="253" r="16" fill="#ff8500"/>
+  <path d="M150 374h212" stroke="#25140d" stroke-width="20" stroke-linecap="round" opacity=".16"/>
+  <text x="256" y="421" text-anchor="middle" fill="#e62128" font-family="Segoe UI, Arial, sans-serif" font-size="42" font-style="italic" font-weight="900">CafeTrack</text>
+</svg>
